@@ -191,6 +191,16 @@ export default class JasonNeonSidebar extends View {
       .when(Boolean(action), (el) => el.child(svg(I(open ? "chevron-down" : "chevron-right")).size(11).flex_none()));
   }
 
+  // Needs you: a pulsing outline over a row, red-pink when an agent is blocked,
+  // green when one finished while you were away. Native animation, no timer.
+  attention(t, status, radius) {
+    const c = status === "blocked" ? t.blocked : status === "done" ? t.done : null;
+    if (!c) return null;
+    return div().absolute().top(0).bottom(0).left(0).right(0).rounded(radius)
+      .border_2().border_color(c).bg(c + "1a")
+      .loop("opacity", { from: 0.25, to: 1, period: 900 });
+  }
+
   // A count that speaks up: an orange pill the person can't miss.
   badge(t, count, hot) {
     if (!count) return null;
@@ -351,6 +361,7 @@ export default class JasonNeonSidebar extends View {
           .tooltip(`${s.name} · ${machineInfo(s.machine).label}`)
           .on_click(() => { run("space.select", { id: s.id }); showWork(); })
           .child([...s.name][0]?.toUpperCase() ?? "?")
+          .when(Boolean(this.attention(t, s.status, 7)), (el) => el.child(this.attention(t, s.status, 7)))
           .when(Boolean(s.status), (s2) => s2.child(div().absolute().right(4).bottom(4).size(5).rounded_full().bg(t[s.status] ?? t.dim)))));
     }
     const colors = this.colors();
@@ -444,7 +455,8 @@ export default class JasonNeonSidebar extends View {
           .when(Boolean(space.status), (el) => el.child(space.status === "working"
             ? div().size(5).rounded_full().flex_none().bg(t.working).loop("opacity", { from: 0.35, to: 1, period: 1300 })
             : div().size(5).rounded_full().flex_none().bg(t[space.status] ?? t.dim)))
-          .when(Boolean(time), (el) => el.child(div().flex_none().font_family("Geist Mono").text_size(10.5).text_color(t.dim).child(ago(time))));
+          .when(Boolean(time), (el) => el.child(div().flex_none().font_family("Geist Mono").text_size(10.5).text_color(t.dim).child(ago(time))))
+          .when(Boolean(this.attention(t, space.status, 6)), (el) => el.child(this.attention(t, space.status, 6)));
         if (!open || !tabs.length) return [row];
         // Its sessions in tab order, on a guide line under the workstream's mark.
         return [row, v_flex()
@@ -490,8 +502,10 @@ export default class JasonNeonSidebar extends View {
       .on_mouse_down("left", (_e, cx) => cx.stop_propagation())
       .on_click((_e, cx) => { cx.stop_propagation(); run(command, { id: tab.id }); })
       .child(svg(icon).size(10));
+    const alert = this.attention(t, tab.status, 7);
     return h_flex()
       .id(`${where}-${tab.id}`)
+      .relative()
       .h(nested ? 26 : 28)
       .flex_none()
       .px(8)
@@ -526,7 +540,8 @@ export default class JasonNeonSidebar extends View {
         .child(action(tab.settled ? "tab.unsettle" : "tab.settle", I(tab.settled ? "chevron-left" : "archive"),
           tab.settled ? "Restore this session" : "Settle this session"))
         .child(action("tab.close", "mods/pane/close.svg", "Close this session")))
-      .when(!hovered, (el) => el.child(div().flex_none().font_family("Geist Mono").text_size(10.5).text_color(t.dim).child(ago(tab.changed_at))));
+      .when(!hovered, (el) => el.child(div().flex_none().font_family("Geist Mono").text_size(10.5).text_color(t.dim).child(ago(tab.changed_at))))
+      .when(Boolean(alert), (el) => el.child(alert));
   }
 
   sessions(t, compact) {

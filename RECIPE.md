@@ -70,6 +70,13 @@ command palette's key ("⌘⇧P commands").
 - **Statuses.** Working pulses pink (dots) or spins (pane header). Blocked shows
   in `#ff799d` with a "Needs you" badge. Done is acid green and turns idle once
   seen. Idle is dim. A workstream's dot is its most urgent session's.
+- **Needs you stands out.** A blocked agent's rows (its session in both lists,
+  its workstream, its rail icon) get a 2 px outline in the blocked colour over a
+  faint wash, pulsing between 25 % and full opacity every 900 ms. Its pane
+  header band pulses the same way (a 25 % wash and a 2 px bottom line). An agent
+  that finished while you were away does the same in acid green until you look.
+  The status bar's dot grows to 7 px and pulses with "· N need attention". All of
+  it is native `loop("opacity")` animation, no timers.
 - **Workstreams.** Click selects it and shows the work area. Drag to reorder
   within its machine. Right-click opens Herdr's space menu. The chevron folds
   its sessions, and folds are remembered.
@@ -154,6 +161,8 @@ command palette's key ("⌘⇧P commands").
   while it's selected.
 - Folding a workstream hides its sessions and shows their count, and stays
   folded after a restart.
+- A blocked agent's session, workstream and pane header pulse in the blocked
+  colour, and a finished one pulses green until you look at it.
 - An unnamed shell tab in `~/git/app` reads `zsh · ~/git/app` (or your
   shell's name), and changes as you `cd`.
 - The Workstreams **+** lists this computer and every machine. Picking one

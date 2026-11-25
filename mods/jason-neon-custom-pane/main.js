@@ -64,10 +64,15 @@ export default class Pane extends View {
     const name = p.name || ((p.program?.agent || p.program?.shell) && p.program.name) || p.title || p.program?.name || "shell";
     const pic = icon(p.program, 14, t.dim);
     const st = p.status;
+    // Needs you: the header band pulses, red-pink when blocked, green when done.
+    const ac = st === "blocked" ? t.blocked : st === "done" ? t.done : null;
+    const alert = ac && div().absolute().top(0).bottom(0).left(0).right(0).bg(ac + "40").border_b(2).border_color(ac)
+      .loop("opacity", { from: 0.15, to: 1, period: 900 });
     const pane = p.pane;
     const bottom = paneFrame(layout())?.header?.position === "bottom";
     return h_flex()
       .id(`pane-head-${pane}`)
+      .relative()
       .size_full()
       .px(10)
       .gap(8)
@@ -90,6 +95,7 @@ export default class Pane extends View {
         .child(this.button(t, `ph-r-${pane}`, "split-right", "pane.split", { direction: "right", pane }))
         .child(this.button(t, `ph-d-${pane}`, "split-down", "pane.split", { direction: "down", pane }))
         .child(this.button(t, `ph-z-${pane}`, p.zoomed ? "unzoom" : "zoom", "pane.zoom", { pane }))
-        .child(this.button(t, `ph-x-${pane}`, "close", "pane.close", { pane })));
+        .child(this.button(t, `ph-x-${pane}`, "close", "pane.close", { pane })))
+      .when(Boolean(alert), (el) => el.child(alert));
   }
 }
