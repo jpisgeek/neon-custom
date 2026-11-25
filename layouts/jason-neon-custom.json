@@ -1,0 +1,206 @@
+{
+  "id": "root",
+  "type": "row",
+  "titlebar": "none",
+  "traffic_lights": [
+    16,
+    15
+  ],
+  "theme": "jason-neon-custom",
+  "background": "canvas",
+  "terminal_padding": [
+    16,
+    20
+  ],
+  "divider": {
+    "width": 2,
+    "color": "#ff3bd4"
+  },
+  "children": [
+    {
+      "id": "sidebar",
+      "type": "column",
+      "size": {
+        "px": 268
+      },
+      "min": 44,
+      "max": 460,
+      "background": "chrome",
+      "children": [
+        {
+          "id": "sidebar-head",
+          "type": "block",
+          "size": {
+            "px": 46
+          },
+          "window_drag": true,
+          "content": {
+            "mod": "jason-neon-custom-sidebar",
+            "props": {
+              "part": "head"
+            }
+          }
+        },
+        {
+          "id": "sidebar-nav",
+          "type": "block",
+          "size": {
+            "px": 156
+          },
+          "content": {
+            "mod": "jason-neon-custom-sidebar",
+            "props": {
+              "part": "nav"
+            }
+          }
+        },
+        {
+          "id": "sidebar-lists",
+          "type": "block",
+          "size": {
+            "weight": 1
+          },
+          "min": 120,
+          "content": {
+            "mod": "jason-neon-custom-sidebar",
+            "props": {
+              "part": "list"
+            }
+          }
+        },
+        {
+          "id": "sidebar-footer",
+          "type": "block",
+          "size": {
+            "px": 60
+          },
+          "content": {
+            "mod": "jason-neon-custom-sidebar",
+            "props": {
+              "part": "foot"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "work-column",
+      "type": "column",
+      "children": [
+        {
+          "id": "work-body",
+          "type": "row",
+          "gap": 0,
+          "children": [
+            {
+              "id": "main-stack",
+              "type": "stack",
+              "active": "work",
+              "children": [
+                {
+                  "id": "work",
+                  "type": "block",
+                  "padding": 10,
+                  "content": {
+                    "tab": "active",
+                    "pane": {
+                      "gap": 8,
+                      "radius": 10,
+                      "background": "background",
+                      "lone": true,
+                      "border": {
+                        "width": 1,
+                        "color": "#8f39b5"
+                      },
+                      "focus": {
+                        "width": 2,
+                        "color": "#ff3bd4"
+                      },
+                      "header": {
+                        "content": {
+                          "mod": "jason-neon-custom-pane"
+                        },
+                        "height": 30,
+                        "position": "top",
+                        "reveal": "always"
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "home",
+                  "type": "block",
+                  "content": {
+                    "mod": "jason-neon-custom-home"
+                  },
+                  "background": {
+                    "image": "mods/jason-neon-custom-home/halftone-pink-green.png",
+                    "fit": "cover"
+                  }
+                }
+              ],
+              "size": {
+                "weight": 1
+              },
+              "min": 0
+            },
+            {
+              "id": "panel",
+              "type": "column",
+              "hidden": true,
+              "size": {
+                "px": 368
+              },
+              "min": 280,
+              "max": 900,
+              "children": [
+                {
+                  "id": "panel-body",
+                  "type": "stack",
+                  "active": "files",
+                  "children": [
+                    {
+                      "id": "files",
+                      "type": "block",
+                      "content": {
+                        "mod": "files"
+                      }
+                    },
+                    {
+                      "id": "changes",
+                      "type": "block",
+                      "content": {
+                        "mod": "changes"
+                      }
+                    }
+                  ],
+                  "size": {
+                    "weight": 1
+                  },
+                  "min": 0
+                }
+              ],
+              "padding": 10,
+              "background": "canvas"
+            }
+          ]
+        },
+        {
+          "id": "status",
+          "type": "block",
+          "size": {
+            "px": 30
+          },
+          "content": {
+            "mod": "jason-neon-custom-status"
+          },
+          "border": {
+            "width": 1,
+            "color": "#ff3bd4"
+          }
+        }
+      ]
+    }
+  ],
+  "preview": "layouts/jason-neon-custom.svg"
+}

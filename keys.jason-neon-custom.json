@@ -1,0 +1,18 @@
+{
+  "layout:jason-neon-custom": {
+    "cmd-shift-h": {
+      "command": "layout.select",
+      "args": {
+        "stack": "main-stack",
+        "child": "home"
+      }
+    },
+    "cmd-shift-j": {
+      "command": "layout.select",
+      "args": {
+        "stack": "main-stack",
+        "child": "work"
+      }
+    }
+  }
+}
