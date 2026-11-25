@@ -1,46 +1,37 @@
 #!/bin/sh
 # Maintainer tool, not needed to install. Rebuilds this package from the
-# working copy of the layout in a Herdr home (layout "jason-neon" and its
-# jason-neon-* mods): renames everything to jason-neon-custom and swaps the
-# personal machine list in machine.js for the generic one below.
+# installed copy you run and edit (layout jason-neon-custom in a Herdr home),
+# swapping your own machine list in machine.js for the generic one below.
 # Usage: sh sync.sh            (Herdr home ~/.config/herdr-app)
 #        HERDR_APP_HOME=/path sh sync.sh
 set -eu
 
 REPO=$(cd "$(dirname "$0")" && pwd)
 SRC=${HERDR_APP_HOME:-"$HOME/.config/herdr-app"}
-FROM=jason-neon
-TO=jason-neon-custom
+NAME=jason-neon-custom
 PARTS="sidebar status pane home agent-list more agents machines"
 
-[ -f "$SRC/layouts/$FROM.json" ] || { echo "No $FROM layout in $SRC" >&2; exit 1; }
+[ -f "$SRC/layouts/$NAME.json" ] || { echo "No $NAME layout in $SRC" >&2; exit 1; }
 
-# 1. Copy. The app writes jsconfig.json and the .d.ts files itself; the plain
-#    halftone images are unused leftovers.
+# 1. Copy. The app writes jsconfig.json and the .d.ts files itself.
 rm -rf "$REPO/mods" "$REPO/layouts" "$REPO/themes"
 mkdir -p "$REPO/mods" "$REPO/layouts" "$REPO/themes"
 for p in $PARTS; do
-  rsync -a --exclude '*.d.ts' --exclude jsconfig.json --exclude halftone.png --exclude halftone.svg \
-    "$SRC/mods/$FROM-$p/" "$REPO/mods/$TO-$p/"
+  rsync -a --exclude '*.d.ts' --exclude jsconfig.json "$SRC/mods/$NAME-$p/" "$REPO/mods/$NAME-$p/"
 done
-cp "$SRC/layouts/$FROM.json" "$REPO/layouts/$TO.json"
-cp "$SRC/layouts/$FROM.svg" "$REPO/layouts/$TO.svg"
-cp "$SRC/themes/$FROM.json" "$REPO/themes/$TO.json"
+cp "$SRC/layouts/$NAME.json" "$SRC/layouts/$NAME.svg" "$REPO/layouts/"
+cp "$SRC/themes/$NAME.json" "$REPO/themes/"
 
-# 2. Its keys section, renamed, as a file to merge by hand.
-python3 - "$SRC/keys.json" "$REPO/keys.$TO.json" "$FROM" "$TO" <<'EOF'
+# 2. Its keys section, as a file to merge by hand.
+python3 - "$SRC/keys.json" "$REPO/keys.$NAME.json" "$NAME" <<'EOF'
 import json, sys
-src, out, old, new = sys.argv[1:]
-keys = json.load(open(src)).get(f"layout:{old}", {})
-json.dump({f"layout:{new}": keys}, open(out, "w"), indent=2)
+src, out, name = sys.argv[1:]
+section = f"layout:{name}"
+json.dump({section: json.load(open(src)).get(section, {})}, open(out, "w"), indent=2)
 open(out, "a").write("\n")
 EOF
 
-# 3. Rename: mod names, asset paths, commands, shared and stored keys, titles.
-find "$REPO/mods" "$REPO/layouts" "$REPO/themes" -type f \( -name '*.js' -o -name '*.json' \) \
-  -exec perl -pi -e 's/jason-neon(?!-custom)/jason-neon-custom/g; s/Jason Neon(?! Custom)/Jason Neon Custom/g' {} +
-
-# 4. The generic machine list in place of the personal one.
+# 3. The generic machine list in place of yours.
 GENERIC=$(mktemp)
 cat > "$GENERIC" <<'EOF'
 // <machines>
@@ -55,7 +46,7 @@ export const MACHINES = {
 // </machines>
 EOF
 for p in sidebar status pane; do
-  f="$REPO/mods/$TO-$p/machine.js"
+  f="$REPO/mods/$NAME-$p/machine.js"
   GEN="$GENERIC" perl -0pi -e 'BEGIN { local $/; open my $g, "<", $ENV{GEN} or die; $x = <$g> } s{// <machines>\n.*?// </machines>\n}{$x}s or die "no machines block in $ARGV\n"' "$f"
 done
 rm -f "$GENERIC"
