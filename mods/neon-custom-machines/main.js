@@ -10,7 +10,7 @@ const I = (name) => `mods/workspace-chrome/${name}.svg`;
 
 export default class JasonNeonMachines extends View {
   choose(value) {
-    setShared("jason-neon-custom.machine", value);
+    setShared("neon-custom.machine", value);
     closeOverlay(props()?.overlay);
   }
 
@@ -37,7 +37,7 @@ export default class JasonNeonMachines extends View {
 
   render() {
     const t = theme();
-    const chosen = shared("jason-neon-custom.machine");
+    const chosen = shared("neon-custom.machine");
     const list = machines().filter((machine) => machine.name);
     return v_flex()
       .size_full()
@@ -49,7 +49,7 @@ export default class JasonNeonMachines extends View {
       .child(div().px(8).pt(3).pb(6).child("START SESSIONS ON"))
       .child(this.row(t, "machines-follow", "Follow this workstream", null, null, chosen === null || chosen === undefined))
       .child(this.row(t, "machines-local", "This computer", null, "", chosen === ""))
-      .child(v_flex().id("jason-neon-custom-machine-list").h(Math.min(120, list.length * 30)).overflow_y_scrollbar().children(list.map((m) => this.row(
+      .child(v_flex().id("neon-custom-machine-list").h(Math.min(120, list.length * 30)).overflow_y_scrollbar().children(list.map((m) => this.row(
         t,
         `machines-${m.name}`,
         m.name,

@@ -30,7 +30,7 @@ export default class JasonNeonStatus extends View {
         if (find(layout(), "sidebar")?.hidden) {
           run("layout.show", { id: "sidebar" });
         } else {
-          run("jason-neon-custom-sidebar.toggle");
+          run("neon-custom-sidebar.toggle");
         }
       }
     });
@@ -86,7 +86,7 @@ export default class JasonNeonStatus extends View {
     if (atHome && this.atHome && tab && tab !== this.tab) {
       run("layout.select", { stack: "main-stack", child: "work" });
     } else if (atHome && !this.atHome) {
-      run("jason-neon-custom-home.focus");
+      run("neon-custom-home.focus");
     }
     this.atHome = atHome;
     this.tab = tab;
@@ -112,7 +112,7 @@ export default class JasonNeonStatus extends View {
       .child(h_flex().id("status-agents").flex_none().gap(6).items_center().cursor_pointer()
         .hover((s) => s.text_color(t.muted))
         .tooltip("Agents, with their state and pins")
-        .on_click(() => openOverlay({ mod: "jason-neon-custom-agent-list", kind: "dialog", width: 420, height: 560 }))
+        .on_click(() => openOverlay({ mod: "neon-custom-agent-list", kind: "dialog", width: 420, height: 560 }))
         .child(div().size(5).rounded_full().bg(needs ? t.accent : working ? t.working : t.input)
           .when(needs > 0, (el) => el.size(7).loop("opacity", { from: 0.2, to: 1, period: 900 }))
           .when(!needs && working > 0, (el) => el.loop("opacity", { from: 0.35, to: 1, period: 1300 })))
@@ -121,6 +121,6 @@ export default class JasonNeonStatus extends View {
       .child(h_flex().flex_none().h(20).rounded(6).border_1().border_color(t.border).overflow_hidden()
         .child(this.panel(t, "files", "Files", "mods/files/file.svg", open, body?.active === "files"))
         .child(this.panel(t, "changes", "Changes", "mods/workspace-chrome/git-compare.svg", open, body?.active === "changes")))
-      .child(div().id("jason-neon-custom-palette").flex_none().cursor_pointer().hover((s) => s.text_color(t.muted)).on_click(() => run("app.palette")).child(this.hint()));
+      .child(div().id("neon-custom-palette").flex_none().cursor_pointer().hover((s) => s.text_color(t.muted)).on_click(() => run("app.palette")).child(this.hint()));
   }
 }

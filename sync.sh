@@ -1,6 +1,6 @@
 #!/bin/sh
 # Maintainer tool, not needed to install. Rebuilds this package from the
-# installed copy you run and edit (layout jason-neon-custom in a Herdr home),
+# installed copy you run and edit (layout neon-custom in a Herdr home),
 # swapping your own machine list in machine.js for the generic one below.
 # Usage: sh sync.sh            (Herdr home ~/.config/herdr-app)
 #        HERDR_APP_HOME=/path sh sync.sh
@@ -8,7 +8,7 @@ set -eu
 
 REPO=$(cd "$(dirname "$0")" && pwd)
 SRC=${HERDR_APP_HOME:-"$HOME/.config/herdr-app"}
-NAME=jason-neon-custom
+NAME=neon-custom
 PARTS="sidebar status pane home agent-list more agents machines"
 
 [ -f "$SRC/layouts/$NAME.json" ] || { echo "No $NAME layout in $SRC" >&2; exit 1; }

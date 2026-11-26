@@ -1,25 +1,37 @@
-# jason-neon-custom
+# Neon Custom
 
-A [Herdr](https://herdr.dev) layout for running sessions across several
-machines: a dark violet window with acid-green and hot-pink accents, a sidebar
-where every workstream lists its own sessions, and a colour-coded machine chip
-on every workstream, session, pane header and the status bar, so you can tell at
-a glance what runs where.
+```console
+$ herdr-app do layout.switch '{"name":"neon-custom"}'
+```
 
-![jason-neon-custom](preview.png)
+Dark violet, acid green and hot pink. Workstreams unfold into sessions and pane cards, so side-by-side agents each have a place in the sidebar.
 
-- Workstreams as a tree. Each workstream (a Herdr space) lists its sessions
-  under it and folds with a chevron. A second list shows every session by time,
-  each carrying its workstream's lettered mark.
-- Machine chips. Short names and colours per machine, set in `machine.js`. Any
-  machine not listed shows its own name.
-- New workstream on… The Workstreams + asks which machine to use.
-- Plain shells read well. An unnamed shell tab is named after its shell and
-  folder (`zsh · ~/git/app`) instead of its number.
-- A home screen with a composer that starts an agent or a shell on any machine.
+![Neon Custom: animated mockup with fictional agents and projects](assets/demo.gif)
+
+[Watch the MP4](assets/demo.mp4) · [Still preview](preview.png)
+
+The demo uses fictional machines, agents and projects. Typing, ASCII art and signal bars are scripted terminal content inspired by [my profile](https://github.com/jpisgeek/jpisgeek); they are not built-in agent output. The layout animates status indicators and attention pulses. Background artwork is static.
+
+## What you get
+
+- Workstreams → sessions → individual pane cards. Split a session and both agents stay visible.
+- Matching P1/P2 labels in the sidebar and terminal headers.
+- Machine chips on workstreams, sessions, pane headers and the status bar.
+- Full-width working area, with Files and Changes available when you need them.
+- Live agent sessions stay under Today across workstreams. The session filter says whether you are seeing all spaces or just one.
+- Working indicators spin or pulse; blocked and done states draw attention until you inspect them.
+- Home composer, agent picker, remote machine selection, and optional Home/Work shortcuts.
 
 ## Install
 
-Clone this repo and run `sh install.sh`. See [INSTALL.md](INSTALL.md).
+```sh
+git clone https://github.com/jpisgeek/neon-custom.git
+cd neon-custom
+sh install.sh
+```
 
-`RECIPE.md` describes how the layout looks, behaves and is built.
+The installer refuses to overwrite an existing layout and leaves your keybindings alone. See [INSTALL.md](INSTALL.md) for setup and customization.
+
+[RECIPE.md](RECIPE.md) describes the layout and how to rebuild it. [DEMO.md](DEMO.md) describes the mock animation and how it was generated.
+
+Also available: [Nightwire](https://github.com/jpisgeek/nightwire).

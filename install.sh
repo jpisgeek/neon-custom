@@ -1,5 +1,5 @@
 #!/bin/sh
-# Installs the jason-neon-custom layout, its theme and its eight mods into Herdr.
+# Installs the neon-custom layout, its theme and its eight mods into Herdr.
 # It never overwrites: if a name is already taken, it stops and changes nothing.
 # It leaves keys.json alone; see INSTALL.md for the two optional shortcuts.
 # Usage: sh install.sh            (Herdr home ~/.config/herdr-app)
@@ -8,7 +8,7 @@ set -eu
 
 SRC=$(cd "$(dirname "$0")" && pwd)
 HOME_DIR=${HERDR_APP_HOME:-"$HOME/.config/herdr-app"}
-NAME=jason-neon-custom
+NAME=neon-custom
 MODS="sidebar status pane home agent-list more agents machines"
 
 if [ ! -d "$HOME_DIR" ]; then

@@ -7,14 +7,7 @@
 import { div } from "gpui-kit";
 
 // <machines>
-// Short names and colours for your machines, by their `hc machine ls` name.
-// Key "" is this computer; `host` is what the status bar and tooltips call it.
-// Colours are theme names. A machine not listed shows its own name, in a
-// colour picked from that name. For example:
-//   "my-studio-hostname": { label: "studio", color: "ansi4" },
-export const MACHINES = {
-  "": { label: "local", color: "ansi2" },
-};
+export const MACHINES = { "": { label: "local", color: "ansi2" } };
 // </machines>
 
 // Not pink (working) or red (needs you): those already mean something here.

@@ -1,87 +1,72 @@
 {
   "id": "root",
   "type": "row",
-  "titlebar": "none",
-  "traffic_lights": [
-    16,
-    15
-  ],
-  "theme": "jason-neon-custom",
-  "background": "canvas",
-  "terminal_padding": [
-    16,
-    20
-  ],
-  "divider": {
-    "width": 2,
-    "color": "#ff3bd4"
-  },
   "children": [
     {
       "id": "sidebar",
       "type": "column",
-      "size": {
-        "px": 268
-      },
-      "min": 44,
-      "max": 460,
-      "background": "chrome",
       "children": [
         {
           "id": "sidebar-head",
           "type": "block",
-          "size": {
-            "px": 46
-          },
-          "window_drag": true,
           "content": {
-            "mod": "jason-neon-custom-sidebar",
+            "mod": "neon-custom-sidebar",
             "props": {
               "part": "head"
             }
-          }
+          },
+          "size": {
+            "px": 46
+          },
+          "window_drag": true
         },
         {
           "id": "sidebar-nav",
           "type": "block",
-          "size": {
-            "px": 156
-          },
           "content": {
-            "mod": "jason-neon-custom-sidebar",
+            "mod": "neon-custom-sidebar",
             "props": {
               "part": "nav"
             }
+          },
+          "size": {
+            "px": 156
           }
         },
         {
           "id": "sidebar-lists",
           "type": "block",
-          "size": {
-            "weight": 1
-          },
-          "min": 120,
           "content": {
-            "mod": "jason-neon-custom-sidebar",
+            "mod": "neon-custom-sidebar",
             "props": {
               "part": "list"
             }
-          }
+          },
+          "size": {
+            "weight": 1
+          },
+          "min": 120
         },
         {
           "id": "sidebar-footer",
           "type": "block",
-          "size": {
-            "px": 60
-          },
           "content": {
-            "mod": "jason-neon-custom-sidebar",
+            "mod": "neon-custom-sidebar",
             "props": {
               "part": "foot"
             }
+          },
+          "size": {
+            "px": 60
           }
         }
-      ]
+      ],
+      "size": {
+        "px": 268
+      },
+      "min": 44,
+      "max": 460,
+      "background": "chrome"
     },
     {
       "id": "work-column",
@@ -90,24 +75,26 @@
         {
           "id": "work-body",
           "type": "row",
-          "gap": 0,
           "children": [
             {
               "id": "main-stack",
               "type": "stack",
-              "active": "work",
               "children": [
                 {
                   "id": "work",
                   "type": "block",
-                  "padding": 10,
                   "content": {
                     "tab": "active",
                     "pane": {
-                      "gap": 8,
-                      "radius": 10,
+                      "header": {
+                        "content": {
+                          "mod": "neon-custom-pane"
+                        },
+                        "reveal": "always",
+                        "height": 30,
+                        "position": "top"
+                      },
                       "background": "background",
-                      "lone": true,
                       "border": {
                         "width": 1,
                         "color": "#8f39b5"
@@ -116,29 +103,26 @@
                         "width": 2,
                         "color": "#ff3bd4"
                       },
-                      "header": {
-                        "content": {
-                          "mod": "jason-neon-custom-pane"
-                        },
-                        "height": 30,
-                        "position": "top",
-                        "reveal": "always"
-                      }
+                      "radius": 10,
+                      "gap": 8,
+                      "lone": true
                     }
-                  }
+                  },
+                  "padding": 10
                 },
                 {
                   "id": "home",
                   "type": "block",
                   "content": {
-                    "mod": "jason-neon-custom-home"
+                    "mod": "neon-custom-home"
                   },
                   "background": {
-                    "image": "mods/jason-neon-custom-home/halftone-pink-green.png",
+                    "image": "mods/neon-custom-home/halftone-pink-green.png",
                     "fit": "cover"
                   }
                 }
               ],
+              "active": "work",
               "size": {
                 "weight": 1
               },
@@ -147,17 +131,10 @@
             {
               "id": "panel",
               "type": "column",
-              "hidden": true,
-              "size": {
-                "px": 368
-              },
-              "min": 280,
-              "max": 900,
               "children": [
                 {
                   "id": "panel-body",
                   "type": "stack",
-                  "active": "files",
                   "children": [
                     {
                       "id": "files",
@@ -174,25 +151,33 @@
                       }
                     }
                   ],
+                  "active": "files",
                   "size": {
                     "weight": 1
                   },
                   "min": 0
                 }
               ],
-              "padding": 10,
-              "background": "canvas"
+              "size": {
+                "px": 368
+              },
+              "min": 280,
+              "max": 900,
+              "hidden": true,
+              "background": "canvas",
+              "padding": 10
             }
-          ]
+          ],
+          "gap": 0
         },
         {
           "id": "status",
           "type": "block",
+          "content": {
+            "mod": "neon-custom-status"
+          },
           "size": {
             "px": 30
-          },
-          "content": {
-            "mod": "jason-neon-custom-status"
           },
           "border": {
             "width": 1,
@@ -202,5 +187,20 @@
       ]
     }
   ],
-  "preview": "layouts/jason-neon-custom.svg"
+  "background": "canvas",
+  "theme": "neon-custom",
+  "terminal_padding": [
+    16,
+    20
+  ],
+  "divider": {
+    "width": 2,
+    "color": "#ff3bd4"
+  },
+  "titlebar": "none",
+  "traffic_lights": [
+    16,
+    15
+  ],
+  "preview": "layouts/neon-custom.svg"
 }

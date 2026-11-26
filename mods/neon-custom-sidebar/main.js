@@ -1,4 +1,4 @@
-// The jason-neon-custom sidebar: the window's top row, its fixed actions, workstreams
+// The neon-custom sidebar: the window's top row, its fixed actions, workstreams
 // (spaces) and sessions (tabs) grouped by recency, and the person's footer.
 // The layout places three copies of this mod: part "head", "nav" and "foot";
 // a fourth part, "list", holds workstreams and sessions. A fifth, "machines",
@@ -39,10 +39,10 @@ function showWork() {
 // Return to the last expanded width after the icon rail.
 function toggleRail() {
   if (rail()) {
-    const width = shared("jason-neon-custom.rail.width");
+    const width = shared("neon-custom.rail.width");
     run("layout.resize", { id: "sidebar", px: typeof width === "number" && width >= 208 ? width : 268 });
   } else {
-    setShared("jason-neon-custom.rail.width", find(layout(), "sidebar")?.size?.px ?? 268);
+    setShared("neon-custom.rail.width", find(layout(), "sidebar")?.size?.px ?? 268);
     run("layout.resize", { id: "sidebar", px: window()?.platform === "macos" ? 76 : 44 });
   }
 }
@@ -114,9 +114,9 @@ export default class JasonNeonSidebar extends View {
     const part = props()?.part ?? "list";
     if (part === "list") {
       let folded;
-      try { folded = JSON.parse(localStorage.getItem("jason-neon-custom.folded")); } catch {}
+      try { folded = JSON.parse(localStorage.getItem("neon-custom.folded")); } catch {}
       this.folded = new Set(Array.isArray(folded) ? folded : ["week", "month", "older", "settled"]);
-      this.mine = localStorage.getItem("jason-neon-custom.mine") === "1";
+      this.mine = localStorage.getItem("neon-custom.mine") === "1";
       this.pressed = null;
       this.over = null;
       this.hovered = null;
@@ -140,12 +140,12 @@ export default class JasonNeonSidebar extends View {
 
   // This mod's own icons.
   m(name) {
-    return `mods/jason-neon-custom-sidebar/${name}.svg`;
+    return `mods/neon-custom-sidebar/${name}.svg`;
   }
   fold(id, cx) {
     if (this.folded.has(id)) this.folded.delete(id);
     else this.folded.add(id);
-    localStorage.setItem("jason-neon-custom.folded", JSON.stringify([...this.folded]));
+    localStorage.setItem("neon-custom.folded", JSON.stringify([...this.folded]));
     if (cx) cx.notify();
   }
 
@@ -241,7 +241,7 @@ export default class JasonNeonSidebar extends View {
       .pl(left)
       .pr(10)
       .child(div()
-        .id("jason-neon-custom-sidebar-toggle")
+        .id("neon-custom-sidebar-toggle")
         .size(26)
         .flex_none()
         .flex()
@@ -255,14 +255,14 @@ export default class JasonNeonSidebar extends View {
         .on_mouse_down("left", (_e, cx) => cx.stop_propagation())
         .on_click(toggleRail)
         .child(svg(I("sidebar")).size(16)))
-      .child(div().flex_1().pl(6).text_size(11).font_semibold().text_color("#ff3bd4").child("JASON / NEON"))
-      .child(icon("jason-neon-custom-prev", I("chevron-left"), () => run("space.prev"), "Previous workstream"))
-      .child(icon("jason-neon-custom-next", I("chevron-right"), () => run("space.next"), "Next workstream"))
+      .child(div().flex_1().pl(6).text_size(11).font_semibold().text_color("#ff3bd4").child("NEON CUSTOM"))
+      .child(icon("neon-custom-prev", I("chevron-left"), () => run("space.prev"), "Previous workstream"))
+      .child(icon("neon-custom-next", I("chevron-right"), () => run("space.next"), "Next workstream"))
       .when(Boolean(w?.buttons), (el) => el
-        .child(icon("jason-neon-custom-minimize", "mods/tabs/win-min.svg", () => run("window.minimize"), "Minimize"))
-        .child(icon("jason-neon-custom-maximize", w.maximized ? "mods/tabs/win-restore.svg" : "mods/tabs/win-max.svg",
+        .child(icon("neon-custom-minimize", "mods/tabs/win-min.svg", () => run("window.minimize"), "Minimize"))
+        .child(icon("neon-custom-maximize", w.maximized ? "mods/tabs/win-restore.svg" : "mods/tabs/win-max.svg",
           () => run("window.maximize"), w.maximized ? "Restore" : "Maximize"))
-        .child(icon("jason-neon-custom-close-window", "mods/tabs/win-close.svg", () => run("window.close"), "Close window")));
+        .child(icon("neon-custom-close-window", "mods/tabs/win-close.svg", () => run("window.close"), "Close window")));
   }
 
   navPart(t, compact) {
@@ -271,7 +271,7 @@ export default class JasonNeonSidebar extends View {
     const needing = list.filter((a) => a.status === "blocked" || a.status === "done").length;
     const working = list.filter((a) => a.status === "working").length;
     const search = () => run("mod.open", { name: "picker" });
-    const more = () => run("mod.open", { name: "jason-neon-custom-more" });
+    const more = () => run("mod.open", { name: "neon-custom-more" });
     if (compact) {
       const cell = (id, name, action, tip, tone) => div()
         .id(id)
@@ -289,20 +289,20 @@ export default class JasonNeonSidebar extends View {
         .on_click(action)
         .child(svg(name).size(RAIL_ICON_SIZE));
       return v_flex().size_full().items_center().pt(2).gap(2)
-        .child(cell("jason-neon-custom-home", this.m("house"), showHome, "Home", atHome ? t.foreground : undefined))
-        .child(cell("jason-neon-custom-new", I("plus"), startSession, "New session"))
-        .child(cell("jason-neon-custom-agents", I("circle-check"), () => openOverlay({ mod: "jason-neon-custom-agent-list", kind: "dialog", width: 420, height: 560 }), needing ? `${needing} need attention` : "Agents", needing ? t.accent : working ? t.working : undefined))
-        .child(cell("jason-neon-custom-search", I("search"), search, "Search"))
-        .child(cell("jason-neon-custom-more", I("layers"), more, "More"));
+        .child(cell("neon-custom-home", this.m("house"), showHome, "Home", atHome ? t.foreground : undefined))
+        .child(cell("neon-custom-new", I("plus"), startSession, "New session"))
+        .child(cell("neon-custom-agents", I("circle-check"), () => openOverlay({ mod: "neon-custom-agent-list", kind: "dialog", width: 420, height: 560 }), needing ? `${needing} need attention` : "Agents", needing ? t.accent : working ? t.working : undefined))
+        .child(cell("neon-custom-search", I("search"), search, "Search"))
+        .child(cell("neon-custom-more", I("layers"), more, "More"));
     }
     return v_flex().size_full().pt(2).gap(1)
-      .child(this.nav(t, "jason-neon-custom-home", this.m("house"), "Home", showHome, null, atHome))
-      .child(this.nav(t, "jason-neon-custom-new", I("plus"), "New session", startSession))
-      .child(this.nav(t, "jason-neon-custom-agents", I("circle-check"), working ? `Agents · ${working} working` : "Agents",
-        () => openOverlay({ mod: "jason-neon-custom-agent-list", kind: "dialog", width: 420, height: 560 }),
+      .child(this.nav(t, "neon-custom-home", this.m("house"), "Home", showHome, null, atHome))
+      .child(this.nav(t, "neon-custom-new", I("plus"), "New session", startSession))
+      .child(this.nav(t, "neon-custom-agents", I("circle-check"), working ? `Agents · ${working} working` : "Agents",
+        () => openOverlay({ mod: "neon-custom-agent-list", kind: "dialog", width: 420, height: 560 }),
         this.badge(t, needing, true)))
-      .child(this.nav(t, "jason-neon-custom-search", I("search"), "Search", search))
-      .child(this.nav(t, "jason-neon-custom-more", I("layers"), "More", more));
+      .child(this.nav(t, "neon-custom-search", I("search"), "Search", search))
+      .child(this.nav(t, "neon-custom-more", I("layers"), "More", more));
   }
 
 
@@ -374,7 +374,7 @@ export default class JasonNeonSidebar extends View {
           .text_color(t.dim).hover((s) => s.bg(t.hover).text_color(t.foreground)).tooltip("New workstream on…")
           .on_click((_e, cx) => {
             cx.stop_propagation();
-            openOverlay({ mod: "jason-neon-custom-sidebar", kind: "popup", width: 260, height: 40 + 31 * machines().length, props: { part: "machines" } });
+            openOverlay({ mod: "neon-custom-sidebar", kind: "popup", width: 260, height: 40 + 31 * machines().length, props: { part: "machines" } });
           })
           .child(svg(I("plus")).size(13))))
       .children(list.flatMap((space, i) => {
@@ -465,7 +465,7 @@ export default class JasonNeonSidebar extends View {
           .mb(2)
           .border_l(1)
           .border_color(t.border)
-          .children(tabs.map((tab) => this.sessionRow(t, space, tab, {
+          .children(tabs.map((tab) => this.sessionGroup(t, space, tab, {
             where: "wst", nested: true, lead: lead.get(tab.id), colors,
             settled: tab.settled && !(tab.active && space.active) && tab.status !== "blocked" && tab.status !== "done",
           })))];
@@ -477,6 +477,44 @@ export default class JasonNeonSidebar extends View {
     const lead = new Map();
     for (const pane of panes()) if (pane.terminal && !lead.has(pane.tab)) lead.set(pane.tab, pane);
     return lead;
+  }
+
+  // Pane cards keep the space > session > pane hierarchy explicit.
+  sessionGroup(t, space, tab, options) {
+    const group = this.panesByTab.get(tab.id) ?? [];
+    return v_flex().gap(3).mb(5)
+      .child(this.sessionRow(t, space, tab, options))
+      .children(group.map((p, index) => this.paneCard(t, space, tab, p, index)));
+  }
+
+  paneCard(t, space, tab, p, index) {
+    const name = p.name || p.program?.name || p.mod || p.title || "Terminal";
+    const status = p.status === "blocked" ? "Needs you" : p.status || (p.mod ? "Panel" : "Shell");
+    const color = t[p.status] ?? t.dim;
+    const context = `${machineInfo(space.machine).host} / ${space.name} / ${tab.name} / Pane ${index + 1}`;
+    return v_flex()
+      .id(`fleet-pane-${p.pane}`)
+      .ml(8).mr(3).px(8).py(5).gap(3).rounded(8)
+      .border_1().border_color(p.focused ? t.accent : t.border)
+      .bg(p.focused ? t.selected : t.surface)
+      .cursor_pointer().hover(el => el.bg(t.hover))
+      .tooltip(`${context}\n${p.title || name}\n${p.cwd || ""}`)
+      .on_click(() => {
+        run("space.select", { id: space.id });
+        run("tab.select", { id: tab.id });
+        showWork();
+        run("pane.focus", { pane: p.pane });
+      })
+      .child(h_flex().items_center().gap(5)
+        .child(div().flex_none().px(5).rounded(5).bg(t.raised).text_size(9.5)
+          .text_color(p.focused ? t.accent : t.dim).child(`P${index + 1}`))
+        .child(div().flex_1().min_w(0).truncate().text_size(11.5)
+          .text_color(p.focused ? t.accent : t.foreground).child(name))
+        .child(div().size(5).flex_none().rounded_full().bg(color)))
+      .child(h_flex().gap(5).items_center()
+        .child(div().flex_none().text_size(9.5).text_color(color).child(status))
+        .child(div().flex_1().min_w(0).truncate().text_size(9.5).text_color(t.dim)
+          .child(p.cwd ? shortFolder(p.cwd) : p.mod || "")));
   }
 
   // One session (a tab). `where` keys its ids and hover state, since the same
@@ -534,6 +572,9 @@ export default class JasonNeonSidebar extends View {
           : div().size(5).rounded_full().bg(tab.status ? t[tab.status] ?? t.dim : on ? t.muted : t.input)))
       .when(!nested, (el) => el.child(this.mark(t, space, colors, 14, `${where}-mark-${tab.id}`)))
       .child(div().flex_1().min_w(0).truncate().child(name))
+      .when((this.panesByTab.get(tab.id)?.length ?? 0) > 1, el => el.child(
+        div().flex_none().px(4).rounded(5).bg(t.raised).text_size(9).text_color(t.dim)
+          .child(`${this.panesByTab.get(tab.id).length} panes`)))
       .when(tab.zoomed, (el) => el.child(div().flex_none().font_family("Geist Mono").text_size(10).text_color(t.dim).child("Z")))
       .when(!nested, (el) => el.child(machineChip(t, space.machine, `${where}-m-${tab.id}`)))
       .when(hovered, (el) => el
@@ -547,6 +588,7 @@ export default class JasonNeonSidebar extends View {
   sessions(t, compact) {
     if (compact) return div();
     const workstreams = spaces();
+    const liveAgentTabs = new Set(agents().map(agent => agent.tab));
     const active = workstreams.find((s) => s.active);
     const lead = this.leads();
     const list = (this.mine && active ? [active] : workstreams)
@@ -579,11 +621,11 @@ export default class JasonNeonSidebar extends View {
       .on_click((_e, cx) => {
         cx.stop_propagation();
         this.mine = !this.mine;
-        localStorage.setItem("jason-neon-custom.mine", this.mine ? "1" : "0");
+        localStorage.setItem("neon-custom.mine", this.mine ? "1" : "0");
         cx.notify();
       })
       .child(svg(this.m("filter")).size(13));
-    const rows = [this.section(t, "Sessions", "sessions", null,
+    const rows = [this.section(t, this.mine ? "Sessions · This space" : "Sessions · All spaces", "sessions", null,
       h_flex().flex_none().gap(2).items_center().child(filter).child(newSession))];
 
     const colors = this.colors();
@@ -594,8 +636,9 @@ export default class JasonNeonSidebar extends View {
     const away = [];
     for (const session of list) {
       const { tab, space } = session;
-      const settled = tab.settled && !(tab.active && space.active) && tab.status !== "blocked" && tab.status !== "done";
-      (settled ? away : groups.get(bucketOf(tab.changed_at))).push(session);
+      const live = liveAgentTabs.has(tab.id);
+      const settled = !live && tab.settled && !(tab.active && space.active) && tab.status !== "blocked" && tab.status !== "done";
+      (settled ? away : groups.get(live ? "today" : bucketOf(tab.changed_at))).push(session);
     }
     for (const group of BUCKETS) {
       const sessions = groups.get(group.id);
@@ -614,7 +657,7 @@ export default class JasonNeonSidebar extends View {
     const name = home().split(/[\\/]/).filter(Boolean).pop() ?? "you";
     const needing = agents().filter((a) => a.status === "blocked" || a.status === "done").length;
     const gear = div()
-      .id("jason-neon-custom-settings")
+      .id("neon-custom-settings")
       .size(26)
       .flex_none()
       .flex()
@@ -629,7 +672,7 @@ export default class JasonNeonSidebar extends View {
       .when(Boolean(updates()?.app?.ready), (el) => el.relative().child(div().absolute().top(3).right(3).size(5).rounded_full().bg(t.accent)));
     if (compact) {
       const unfold = div()
-        .id("jason-neon-custom-unfold")
+        .id("neon-custom-unfold")
         .size(26)
         .flex_none()
         .flex()
@@ -691,6 +734,11 @@ export default class JasonNeonSidebar extends View {
     if (part === "head") return v_flex().size_full().bg(t.chrome).child(this.head(t, compact));
     if (part === "nav") return v_flex().size_full().bg(t.chrome).px(compact ? 0 : 8).child(this.navPart(t, compact));
     if (part === "foot") return v_flex().size_full().bg(t.chrome).child(this.foot(t, compact));
+    this.panesByTab = new Map();
+    for (const pane of panes()) {
+      if (!this.panesByTab.has(pane.tab)) this.panesByTab.set(pane.tab, []);
+      this.panesByTab.get(pane.tab).push(pane);
+    }
     return v_flex()
       .size_full()
       .min_h(0)
@@ -698,7 +746,7 @@ export default class JasonNeonSidebar extends View {
       .px(compact ? 0 : 8)
       .pb(8)
       .child(v_flex()
-        .id("jason-neon-custom-sidebar-scroll")
+        .id("neon-custom-sidebar-scroll")
         .flex_1()
         .min_h(0)
         .on_mouse_up("left", (_e, cx) => {

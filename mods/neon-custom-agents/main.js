@@ -9,7 +9,7 @@ const I = (name) => `mods/workspace-chrome/${name}.svg`;
 
 export default class JasonNeonAgents extends View {
   choose(name) {
-    setShared("jason-neon-custom.agent", name);
+    setShared("neon-custom.agent", name);
     closeOverlay(props()?.overlay);
   }
 
@@ -43,7 +43,7 @@ export default class JasonNeonAgents extends View {
       .child(div().px(8).pt(3).pb(6).text_size(10.5).font_medium().text_color(t.dim).child("START A SESSION WITH"))
       .when(failed, (el) => el.child(div().px(8).pb(6).text_size(12).text_color(t.muted)
         .child("Could not check installed agents on this machine.")))
-      .child(v_flex().id("jason-neon-custom-agent-list").h(Math.min(180, agents.length * 30)).overflow_y_scrollbar().children(agents.map((agent) => {
+      .child(v_flex().id("neon-custom-agent-list").h(Math.min(180, agents.length * 30)).overflow_y_scrollbar().children(agents.map((agent) => {
         const icon = agent.icon
           ? (agent.tint
             ? svg(agent.icon).size(14).flex_none().text_color(t.accent)

@@ -1,5 +1,5 @@
 // A pane's header, for layouts that frame their panes:
-//   { "tab": "active", "pane": { "header": { "content": { "mod": "jason-neon-custom-pane" } } } }
+//   { "tab": "active", "pane": { "header": { "content": { "mod": "neon-custom-pane" } } } }
 // Shows the program's icon (the app's program table), the agent's name or
 // the terminal's title, the folder, and the agent's status; buttons split, zoom and close
 // this pane. Props from the app: { pane, terminal }. Click: focus the pane.
@@ -54,7 +54,7 @@ export default class Pane extends View {
         cx.stop_propagation();
         run(command, args);
       })
-      .child(svg(`mods/jason-neon-custom-pane/${icon}.svg`).size(14));
+      .child(svg(`mods/neon-custom-pane/${icon}.svg`).size(14));
   }
 
   render(cx) {
@@ -63,6 +63,8 @@ export default class Pane extends View {
     if (!p) return div();
     const name = p.name || ((p.program?.agent || p.program?.shell) && p.program.name) || p.title || p.program?.name || "shell";
     const pic = icon(p.program, 14, t.dim);
+    const siblings = panes().filter(item => item.tab === p.tab);
+    const number = siblings.findIndex(item => item.pane === p.pane) + 1;
     const st = p.status;
     // Needs you: the header band pulses, red-pink when blocked, green when done.
     const ac = st === "blocked" ? t.blocked : st === "done" ? t.done : null;
@@ -84,6 +86,8 @@ export default class Pane extends View {
       .text_size(12)
       .on_hover((hovered, cx) => { this.hovered = hovered; cx.notify(); })
       .on_click(() => run("pane.focus", { pane }))
+      .child(div().flex_none().px(5).rounded(5).bg(t.raised).text_size(10)
+        .text_color(p.focused ? t.accent : t.dim).child(`P${number}`))
       .when(Boolean(pic), (el) => el.child(pic))
       .child(div().flex_none().truncate().max_w(260).font_medium().text_color(t.foreground).child(name))
       .child(machineChip(t, machineOf(pane), `ph-m-${pane}`))

@@ -48,11 +48,11 @@ export default class JasonNeonHome extends View {
 
   // This mod's own icons.
   m(name) {
-    return `mods/jason-neon-custom-home/${name}.svg`;
+    return `mods/neon-custom-home/${name}.svg`;
   }
 
   agent() {
-    const chosen = shared("jason-neon-custom.agent");
+    const chosen = shared("neon-custom.agent");
     const list = this.agentRequest?.agents ?? [];
     if (chosen === "Shell") return null;
     return list.find((a) => a.name === chosen) ?? list[0] ?? null;
@@ -60,7 +60,7 @@ export default class JasonNeonHome extends View {
 
   // "" is this computer, a name is another machine, null follows the space.
   target(space) {
-    return shared("jason-neon-custom.machine") ?? space?.machine ?? "";
+    return shared("neon-custom.machine") ?? space?.machine ?? "";
   }
 
   machineState(target) {
@@ -71,7 +71,7 @@ export default class JasonNeonHome extends View {
     const space = spaces().find((s) => s.active);
     const target = this.target(space);
     if (this.machineState(target) !== "ready" || this.agentRequest?.target !== target || !this.agentRequest.agents
-      || (this.agentRequest.failed && shared("jason-neon-custom.agent") !== "Shell")) return;
+      || (this.agentRequest.failed && shared("neon-custom.agent") !== "Shell")) return;
     const text = (this.input.value() ?? "").trim();
     const agent = this.agent();
     const sameSpace = space && target === (space.machine ?? "");
@@ -113,12 +113,12 @@ export default class JasonNeonHome extends View {
     const ready = machineState === "ready";
     const loading = ready && !request?.agents;
     const canChoose = ready && !loading;
-    const canStart = canChoose && (!request.failed || shared("jason-neon-custom.agent") === "Shell");
+    const canStart = canChoose && (!request.failed || shared("neon-custom.agent") === "Shell");
     const icon = agent?.icon
       ? (agent.tint ? svg(agent.icon).size(14).flex_none().text_color(t.accent) : image(agent.icon).w(14).h(14).flex_none())
       : svg(agent || loading ? this.m("autonomy") : I("terminal")).size(14).flex_none().text_color(t.accent);
     const pill = h_flex()
-      .id("jason-neon-custom-agent")
+      .id("neon-custom-agent")
       .h(28)
       .px(7)
       .gap(7)
@@ -131,7 +131,7 @@ export default class JasonNeonHome extends View {
       .when(canChoose, (el) => el.cursor_pointer()
         .hover((s) => s.bg(t.hover).text_color(t.foreground))
         .tooltip("Choose what to start")
-        .on_click(() => openOverlay({ mod: "jason-neon-custom-agents", kind: "popup", width: 232, height: 300,
+        .on_click(() => openOverlay({ mod: "neon-custom-agents", kind: "popup", width: 232, height: 300,
           props: { agents: request.agents, selected: canStart ? (agent?.name ?? "Shell") : null, failed: request.failed } })))
       .child(icon)
       .child(div().max_w(125).truncate().child(!ready ? (machineState === "loading" ? "Loading machine…" : "Machine unavailable") : loading ? "Checking agents…"
@@ -140,7 +140,7 @@ export default class JasonNeonHome extends View {
     const folder = (!target && this.folder) || ((space?.machine ?? "") === target && (focused()?.cwd || space?.folder));
     const folderName = folder ? folder.replace(/[\\/]+$/, "").split(/[\\/]/).pop() || folder : "~";
     const chip = h_flex()
-      .id("jason-neon-custom-folder")
+      .id("neon-custom-folder")
       .h(26)
       .px(7)
       .gap(6)
@@ -158,7 +158,7 @@ export default class JasonNeonHome extends View {
       .child(div().min_w(0).max_w(180).truncate().child(folderName))
       .when(!target, (el) => el.child(svg(I("chevron-down")).size(11).flex_none().text_color(t.dim)));
     const send = div()
-      .id("jason-neon-custom-send")
+      .id("neon-custom-send")
       .size(30)
       .flex_none()
       .flex()
@@ -188,7 +188,7 @@ export default class JasonNeonHome extends View {
         .gap(8)
         .items_center()
         .child(div()
-          .id("jason-neon-custom-plus")
+          .id("neon-custom-plus")
           .size(28)
           .flex_none()
           .flex()
@@ -229,7 +229,7 @@ export default class JasonNeonHome extends View {
       .child(this.composer(t, space, target, machineState))
       .child(h_flex().mt(14).gap(8).items_center()
         .child(h_flex()
-          .id("jason-neon-custom-machine")
+          .id("neon-custom-machine")
           .h(24)
           .px(8)
           .gap(6)
@@ -244,7 +244,7 @@ export default class JasonNeonHome extends View {
           .tooltip(target ? `Sessions start on ${target}: click to change` : "Sessions start on this computer: click to change")
           .cursor_pointer()
           .hover((s) => s.bg(t.hover).text_color(t.foreground))
-          .on_click(() => openOverlay({ mod: "jason-neon-custom-machines", kind: "popup", width: 232, height: 220 }))
+          .on_click(() => openOverlay({ mod: "neon-custom-machines", kind: "popup", width: 232, height: 220 }))
           .child(svg(I(target ? "server" : "monitor")).size(12).flex_none().text_color(t.dim))
           .child(div().max_w(160).truncate().child(target || "Local"))
           .child(svg(I("chevron-down")).size(10).flex_none().text_color(t.dim)))

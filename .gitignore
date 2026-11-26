@@ -1,3 +1,5 @@
-# Herdr writes these into every mod folder on start and on `herdr-app check`.
 *.d.ts
 jsconfig.json
+__pycache__/
+.demo-venv/
+.DS_Store

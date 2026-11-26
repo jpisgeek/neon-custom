@@ -1,4 +1,4 @@
-# jason-neon-custom
+# Neon Custom
 
 A dark violet Herdr window for working across several machines. A left sidebar
 lists workstreams with their sessions nested under them, then every session by
@@ -6,11 +6,11 @@ time. A colour-coded machine chip marks every workstream, session, pane header
 and the status bar. The work area shows the active tab's panes as rounded cards,
 or a home screen with a composer over a pink-to-green halftone.
 
-![jason-neon-custom](preview.png)
+![neon-custom](preview.png)
 
 ## What you see
 
-Left to right, then top to bottom. Theme `jason-neon-custom`: background
+Left to right, then top to bottom. Theme `neon-custom`: background
 `#100b19`, canvas `#08050e`, chrome `#100a1c`, foreground `#f3edff`, muted
 `#bcabd2`, dim `#9c89b2`, selected `#35214f`, hover `#281b3c`, border `#563166`,
 accent / solid / done `#a3ff12` (acid green), working `#ff3bd4` (hot pink),
@@ -20,7 +20,7 @@ traffic lights at 16, 15.
 
 **Sidebar** (268 px, 44–460, chrome), four copies of the sidebar mod:
 
-- **Head** (46 px, drags the window): sidebar toggle, "JASON / NEON" (11 px
+- **Head** (46 px, drags the window): sidebar toggle, "NEON CUSTOM" (11 px
   semibold, pink), previous and next workstream chevrons, and window buttons where
   the system draws none.
 - **Nav** (156 px): Home, New session, Agents (reads "Agents · 2 working", with an
@@ -65,6 +65,8 @@ server icon, the machine chip and host name, the branch. Then the agent count
 with a dot ("3 agents · 1 need attention"), a Files | Changes switch, and the
 command palette's key ("⌘⇧P commands").
 
+Pane cards beneath sessions show each split pane separately with P1/P2 labels, agent identity, folder and status. Selecting a card opens its space/session and focuses the pane. Header numbers use the same pane ordering. This version has no fleet panel on the right or top.
+
 ## How it behaves
 
 - **Statuses.** Working pulses pink (dots) or spins (pane header). Blocked shows
@@ -105,12 +107,14 @@ command palette's key ("⌘⇧P commands").
   ON", with "Add machine…"), the folder chip picks a local folder. On the
   current workstream's machine it opens a new tab there. On another machine it
   opens a new workstream. The session is named from the first words typed.
-- **Keys** (optional, `keys.jason-neon-custom.json`): Cmd-Shift-H home screen,
+- **Keys** (optional, `keys.neon-custom.json`): Cmd-Shift-H home screen,
   Cmd-Shift-J work area.
+
+Live-agent tabs are always placed in Today. The session header labels its current filter: All spaces or This space. Working spinners and attention pulses are native; the terminal animation in assets/demo.gif is fictional scripted content.
 
 ## Built from
 
-- **Layout** `jason-neon-custom`: root row (`titlebar: none`, divider 2 px
+- **Layout** `neon-custom`: root row (`titlebar: none`, divider 2 px
   `#ff3bd4`, `terminal_padding` [16, 20]) → `sidebar` column (blocks
   `sidebar-head`, `sidebar-nav`, `sidebar-lists`, `sidebar-footer`, each the
   sidebar mod with `props.part` `head`, `nav`, `list`, `foot`) and
@@ -118,15 +122,15 @@ command palette's key ("⌘⇧P commands").
   `{tab: "active"}` and `home`, plus a hidden `panel` column with `panel-body` stack of
   `files` and `changes`) and the `status` block.
 - **Mods:**
-  - `jason-neon-custom-sidebar`: head, nav, list and foot, and also the **+**
-    popup, opened as `openOverlay({mod: "jason-neon-custom-sidebar", kind:
+  - `neon-custom-sidebar`: head, nav, list and foot, and also the **+**
+    popup, opened as `openOverlay({mod: "neon-custom-sidebar", kind:
     "popup", props: {part: "machines"}})`.
-  - `jason-neon-custom-status`: the status bar.
-  - `jason-neon-custom-pane`: the pane header (a clone of Herdr's `pane`).
-  - `jason-neon-custom-home`, with popups `jason-neon-custom-agents` and
-    `jason-neon-custom-machines`.
-  - `jason-neon-custom-agent-list` (a clone of Herdr's `agents`) and
-    `jason-neon-custom-more`.
+  - `neon-custom-status`: the status bar.
+  - `neon-custom-pane`: the pane header (a clone of Herdr's `pane`).
+  - `neon-custom-home`, with popups `neon-custom-agents` and
+    `neon-custom-machines`.
+  - `neon-custom-agent-list` (a clone of Herdr's `agents`) and
+    `neon-custom-more`.
   - `machine.js` in sidebar, status and pane: the `MACHINES` map, `machineOf`,
     `machineInfo` and `machineChip`.
 - **Herdr's own mods used:** `files`, `changes`, `menu`, `new-menu`, `picker`,
@@ -155,7 +159,7 @@ command palette's key ("⌘⇧P commands").
 ## Done when
 
 - `herdr-app check` passes for all eight mods and `herdr-app status` lists no
-  errors after `layout.switch {name: "jason-neon-custom"}`.
+  errors after `layout.switch {name: "neon-custom"}`.
 - A workstream on another machine shows that machine's chip on its row, on its
   sessions in the list by time, on its panes' headers, and in the status bar
   while it's selected.

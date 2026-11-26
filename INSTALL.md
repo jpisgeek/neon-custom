@@ -1,4 +1,4 @@
-# Install jason-neon-custom
+# Install neon-custom
 
 ## You need
 
@@ -11,14 +11,14 @@
 2. Run the install script:
 
    ```sh
-   sh jason-neon-custom/install.sh
+   sh neon-custom/install.sh
    ```
 
    The script copies these files into `~/.config/herdr-app` (or
    `$HERDR_APP_HOME`):
-   - `layouts/jason-neon-custom.json` and `layouts/jason-neon-custom.svg`
-   - `themes/jason-neon-custom.json`
-   - eight mods: `jason-neon-custom-sidebar`, `-status`, `-pane`, `-home`,
+   - `layouts/neon-custom.json` and `layouts/neon-custom.svg`
+   - `themes/neon-custom.json`
+   - eight mods: `neon-custom-sidebar`, `-status`, `-pane`, `-home`,
      `-agent-list`, `-more`, `-agents` and `-machines`
 
    It then checks each mod and switches Herdr to the layout.
@@ -45,18 +45,22 @@ Key `""` is this computer. `host` is the name the status bar and tooltips use.
 Colours are theme names (`ansi0`–`ansi15`, `accent`, ...).
 
 There are three identical copies of `machine.js`, in
-`mods/jason-neon-custom-sidebar`, `mods/jason-neon-custom-status` and
-`mods/jason-neon-custom-pane`, because Herdr mods cannot import from each other.
+`mods/neon-custom-sidebar`, `mods/neon-custom-status` and
+`mods/neon-custom-pane`, because Herdr mods cannot import from each other.
 Change all three. Herdr loads the change immediately.
 
 ## Optional shortcuts
 
-`keys.jason-neon-custom.json` holds two shortcuts for this layout: Cmd-Shift-H
+`keys.neon-custom.json` holds two shortcuts for this layout: Cmd-Shift-H
 shows the home screen and Cmd-Shift-J shows the work area. To use them, add its
-`"layout:jason-neon-custom"` section to your `~/.config/herdr-app/keys.json`.
+`"layout:neon-custom"` section to your `~/.config/herdr-app/keys.json`.
 The script does not edit `keys.json`, because any edit makes the whole file
 yours and Herdr stops updating its default shortcuts.
 
 ## Remove
 
 Switch to another layout, then delete the files that step 2 copied.
+
+## Previous names
+
+Neon Custom now uses `neon-custom` everywhere. If you installed `jason-neon-custom`, keep a backup of its layout, theme, mods and optional key section before installing this version. Copy your machine aliases into the new machine helpers. After switching successfully, archive the old layout outside `layouts/` to remove its duplicate picker entry.

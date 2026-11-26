@@ -1,5 +1,5 @@
 {
-  "layout:jason-neon-custom": {
+  "layout:neon-custom": {
     "cmd-shift-h": {
       "command": "layout.select",
       "args": {
