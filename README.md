@@ -35,3 +35,7 @@ The installer refuses to overwrite an existing layout and leaves your keybinding
 [RECIPE.md](RECIPE.md) describes the layout and how to rebuild it. [DEMO.md](DEMO.md) describes the mock animation and how it was generated.
 
 Also available: [Nightwire](https://github.com/jpisgeek/nightwire).
+
+## License
+
+MIT, see [LICENSE](LICENSE). The pane mod is derived from Herdr and stays under the Apache License 2.0, and a few icons come from Lucide and Feather. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

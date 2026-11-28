@@ -1,3 +1,8 @@
+// Derived from the stock "pane" mod shipped with Herdr (https://herdr.dev),
+// licensed under the Apache License 2.0 (see LICENSES/Apache-2.0.txt).
+// Modified for Neon Custom by jpisgeek, 2026. This file is distributed under the
+// Apache License 2.0, not this repository's MIT license.
+//
 // A pane's header, for layouts that frame their panes:
 //   { "tab": "active", "pane": { "header": { "content": { "mod": "neon-custom-pane" } } } }
 // Shows the program's icon (the app's program table), the agent's name or
